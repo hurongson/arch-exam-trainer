@@ -1,0 +1,19 @@
+name: 每日建筑案例推送
+
+on:
+  schedule:
+    # 每天早上 7:30 (北京时间 = UTC+8，所以 UTC 时间是 23:30 前一天)
+    - cron: '30 23 * * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 调用推送 API
+        run: |
+          curl -X POST "${{ secrets.APP_URL }}/api/feishu-push" \
+            -H "Content-Type: application/json" \
+            -d '{}'
+        env:
+          APP_URL: ${{ secrets.APP_URL }}

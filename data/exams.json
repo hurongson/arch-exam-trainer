@@ -1,0 +1,420 @@
+[
+  {
+    "id": "exam-2003",
+    "year": "2003",
+    "title": "小型航站楼",
+    "buildingType": "交通",
+    "siteSize": "85×160",
+    "totalArea": 14140,
+    "floors": "2层",
+    "description": "在某城市拟建一座小型航站楼，满足旅客进出港、候机、安检、行李处理等功能。",
+    "siteConditions": "用地为矩形，地势平坦，一侧临城市道路，一侧临停机坪。",
+    "designRequirements": [
+      "合理组织旅客进出港流线",
+      "出发与到达流线分离",
+      "行李处理流线清晰",
+      "候机区有良好朝向和视野"
+    ],
+    "corePoints": ["旅客流线组织", "进出港分流", "大跨度空间", "行李流线"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2004",
+    "year": "2004",
+    "title": "医院病房楼",
+    "buildingType": "医养",
+    "siteSize": "50×80",
+    "totalArea": 2168,
+    "floors": "多层",
+    "description": "某医院根据发展需要，新建病房楼，包含护理单元、医生办公、护士站、医患交流等空间。",
+    "siteConditions": "用地位于医院院区内部，周边有既有医疗建筑，需考虑与既有建筑的连接。",
+    "designRequirements": [
+      "护理单元布局合理",
+      "医患分流",
+      "病房有良好日照朝向",
+      "护士站视野覆盖护理单元"
+    ],
+    "corePoints": ["医患分流", "护理单元设计", "日照朝向", "护士站位置"],
+    "difficulty": 3
+  },
+  {
+    "id": "exam-2005",
+    "year": "2005",
+    "title": "法院审判楼",
+    "buildingType": "服务",
+    "siteSize": "60×90",
+    "totalArea": 6340,
+    "floors": "2层",
+    "description": "某法院在办公楼南面拆除旧审判楼原址上，新建二层审判楼，保留法院办公楼。",
+    "siteConditions": "用地北侧为既有法院办公楼，需考虑新旧连接；南临城市道路。",
+    "designRequirements": [
+      "审判区以法庭为中心",
+      "公众区、法庭区、犯罪嫌疑人羁押区严格分离",
+      "各种流线互不干扰",
+      "犯罪嫌疑人羁押区与大、中法庭联系方便"
+    ],
+    "corePoints": ["三条流线严格分离", "法庭布局", "羁押区位置", "法官进出通道"],
+    "difficulty": 5
+  },
+  {
+    "id": "exam-2006",
+    "year": "2006",
+    "title": "城市住宅",
+    "buildingType": "居住",
+    "siteSize": "",
+    "totalArea": 0,
+    "floors": "多层",
+    "description": "城市住宅方案设计，包含多种户型、公共空间、交通核等。",
+    "siteConditions": "城市居住用地，周边有城市道路和配套设施。",
+    "designRequirements": [
+      "户型设计合理",
+      "日照间距满足规范",
+      "公共空间布局",
+      "交通核高效"
+    ],
+    "corePoints": ["户型设计", "日照间距", "公共空间", "交通组织"],
+    "difficulty": 3
+  },
+  {
+    "id": "exam-2007",
+    "year": "2007",
+    "title": "厂房改造体育俱乐部",
+    "buildingType": "文体",
+    "siteSize": "69×102",
+    "totalArea": 6380,
+    "floors": "改建",
+    "description": "将某工厂搬迁后遗留的厂房改建并适当扩建成为区域级体育俱乐部。",
+    "siteConditions": "场地平坦，厂房室内外高差150mm；厂房周边为高大水杉树，树冠直径5m左右。",
+    "designRequirements": [
+      "保留原有厂房结构",
+      "扩建部分布置在建筑控制线内",
+      "功能分区明确",
+      "新旧建筑连接自然"
+    ],
+    "corePoints": ["旧建筑改扩建", "结构利用", "功能置换", "新旧连接"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2008",
+    "year": "2008",
+    "title": "公路汽车客运站",
+    "buildingType": "交通",
+    "siteSize": "72×110",
+    "totalArea": 8165,
+    "floors": "2层",
+    "description": "在南方某城市拟建一座公路汽车客运站，包含候车、售票、行包、发车、到站等功能。",
+    "siteConditions": "用地临城市道路，地势平坦，需考虑旅客流线和车辆流线。",
+    "designRequirements": [
+      "旅客流线清晰",
+      "发车车位布局合理",
+      "行包流线独立",
+      "到站与出发分流"
+    ],
+    "corePoints": ["旅客流线", "发车车位", "行包流线", "进出站分流"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2009",
+    "year": "2009",
+    "title": "中国驻某国大使馆",
+    "buildingType": "服务",
+    "siteSize": "70×90",
+    "totalArea": 4700,
+    "floors": "2层",
+    "description": "在某国首都拟建中国大使馆，包含办公、礼宾、签证、生活等功能。",
+    "siteConditions": "用地为矩形，周边有城市道路，需考虑安保和内外分区。",
+    "designRequirements": [
+      "内外分区明确",
+      "安保流线合理",
+      "礼宾空间独立",
+      "办公区与公共区分离"
+    ],
+    "corePoints": ["内外分区", "安保流线", "礼宾空间", "签证区布局"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2010",
+    "year": "2010",
+    "title": "门急诊楼改扩建",
+    "buildingType": "医养",
+    "siteSize": "72×78",
+    "totalArea": 5355,
+    "floors": "改建",
+    "description": "某医院门急诊楼改扩建，包含门诊、急诊、医技、输液等功能。",
+    "siteConditions": "用地内有既有建筑，需考虑新旧连接和医院整体流线。",
+    "designRequirements": [
+      "门诊与急诊分流",
+      "医患分流",
+      "新旧建筑连接",
+      "急诊24小时独立出入口"
+    ],
+    "corePoints": ["门诊急诊分流", "医患分流", "新旧连接", "急救通道"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2011",
+    "year": "2011",
+    "title": "图书馆",
+    "buildingType": "文体",
+    "siteSize": "68×107",
+    "totalArea": 9000,
+    "floors": "2层",
+    "description": "在我国中南地区某地级市拟建一座两层图书馆，包含藏书、阅览、采编、公共服务等功能。",
+    "siteConditions": "用地西侧为城市主干道，南侧为城市次干道，东侧和北侧为城市公园。",
+    "designRequirements": [
+      "读者、书籍、管理员三条流线分流",
+      "藏阅关系合理",
+      "阅览区有良好采光",
+      "公共区与业务区分区明确"
+    ],
+    "corePoints": ["三线分流", "藏阅关系", "阅览采光", "公共/业务分区"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2012",
+    "year": "2012",
+    "title": "博物馆",
+    "buildingType": "文体",
+    "siteSize": "72×105",
+    "totalArea": 10050,
+    "floors": "2层",
+    "description": "在我国中南地区某地级市拟建一座两层、总建筑面积约10000㎡的博物馆。",
+    "siteConditions": "用地西侧为城市主干道，南侧为城市次干道，东侧和北侧为城市公园，用地内有湖面及预留扩建用地。",
+    "designRequirements": [
+      "参观流线清晰连贯",
+      "藏品流线独立",
+      "公共区与学术区分区",
+      "展厅空间灵活"
+    ],
+    "corePoints": ["参观流线", "藏品流线", "公共/学术分区", "展厅布局"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2013",
+    "year": "2013",
+    "title": "超级市场",
+    "buildingType": "商业",
+    "siteSize": "67×103",
+    "totalArea": 12440,
+    "floors": "2层",
+    "description": "拟建一座超级市场，包含营业区、仓储区、办公区、顾客服务等功能。",
+    "siteConditions": "用地临城市道路，需考虑顾客流线和货物流线。",
+    "designRequirements": [
+      "顾客流线清晰",
+      "进货流线独立",
+      "营业区与仓储区分区",
+      "收银区布局合理"
+    ],
+    "corePoints": ["顾客流线", "进货流线", "营业/仓储分区", "收银区"],
+    "difficulty": 3
+  },
+  {
+    "id": "exam-2014",
+    "year": "2014",
+    "title": "老年养护院",
+    "buildingType": "医养",
+    "siteSize": "68×100",
+    "totalArea": 6926,
+    "floors": "2层",
+    "description": "拟建一座老年养护院，包含居住单元、护理站、公共活动、医疗保健、餐饮等功能。",
+    "siteConditions": "用地地势平坦，周边环境安静，需考虑老年人日照和活动需求。",
+    "designRequirements": [
+      "护理单元布局合理",
+      "老年人日照朝向",
+      "公共活动空间集中",
+      "医养结合流线"
+    ],
+    "corePoints": ["护理单元", "日照朝向", "公共活动", "医养结合"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2017",
+    "year": "2017",
+    "title": "旅馆扩建",
+    "buildingType": "商业",
+    "siteSize": "62×90",
+    "totalArea": 7900,
+    "floors": "9层",
+    "description": "因旅馆发展需要，拟扩建一座九层高的旅馆建筑，包含客房、公共活动、后勤等功能。",
+    "siteConditions": "用地内有既有旅馆建筑，需考虑新旧连接和整体流线。",
+    "designRequirements": [
+      "客房标准层高效",
+      "公共区与客房区分区",
+      "后勤流线独立",
+      "新旧建筑连接"
+    ],
+    "corePoints": ["客房标准层", "公共/客房分区", "后勤流线", "新旧连接"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2018",
+    "year": "2018",
+    "title": "公交客运枢纽站",
+    "buildingType": "交通",
+    "siteSize": "43×90",
+    "totalArea": 6200,
+    "floors": "2层",
+    "description": "在南方某市城郊拟建一座总建筑面积约6200㎡的公交客运枢纽站。",
+    "siteConditions": "用地为狭长形，需考虑公交发车、旅客换乘、人行与公交分流。",
+    "designRequirements": [
+      "换乘流线清晰",
+      "发车车位布局",
+      "人行与公交分流",
+      "候车区布局"
+    ],
+    "corePoints": ["换乘流线", "发车车位", "人车流分离", "候车区"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2019",
+    "year": "2019",
+    "title": "多厅电影院",
+    "buildingType": "文体",
+    "siteSize": "60×85",
+    "totalArea": 5900,
+    "floors": "多厅",
+    "description": "拟建一座多厅电影院，包含影厅、观众厅、卖品部、办公、设备等功能。",
+    "siteConditions": "用地临城市商业区域，需考虑观众流线和散场流线。",
+    "designRequirements": [
+      "观众入场流线",
+      "散场流线独立",
+      "影厅排布合理",
+      "声光隔离"
+    ],
+    "corePoints": ["入场流线", "散场流线", "影厅排布", "声光隔离"],
+    "difficulty": 4
+  },
+  {
+    "id": "exam-2020",
+    "year": "2020",
+    "title": "遗址博物馆",
+    "buildingType": "文体",
+    "siteSize": "",
+    "totalArea": 0,
+    "floors": "2层",
+    "description": "拟建一座遗址博物馆，包含遗址展示、展厅、藏品、公共服务等功能。",
+    "siteConditions": "用地内有遗址，需考虑遗址保护和参观流线。",
+    "designRequirements": [
+      "遗址保护优先",
+      "参观流线连贯",
+      "遗址与展厅关系",
+      "藏品流线独立"
+    ],
+    "corePoints": ["遗址保护", "参观流线", "遗址展厅关系", "藏品流线"],
+    "difficulty": 5
+  },
+  {
+    "id": "exam-2021",
+    "year": "2021",
+    "title": "学生文体活动中心",
+    "buildingType": "文体",
+    "siteSize": "",
+    "totalArea": 0,
+    "floors": "2层",
+    "description": "华南地区某大学拟在校园内建一座两层高的学生文体活动中心，总建筑面积约6700㎡。",
+    "siteConditions": "建设用地东侧、南侧临校园道路，需考虑学生人流和动静分区。",
+    "designRequirements": [
+      "动静分区明确",
+      "多功能空间布局",
+      "体育与文艺分流",
+      "学生人流组织"
+    ],
+    "corePoints": ["动静分区", "多功能空间", "体育文艺分流", "人流组织"],
+    "difficulty": 3
+  },
+  {
+    "id": "exam-2022-05",
+    "year": "2022.5",
+    "title": "考试测评综合楼",
+    "buildingType": "服务",
+    "siteSize": "",
+    "totalArea": 6900,
+    "floors": "4层",
+    "description": "在华南地区某园区，拟新建一层四层考试测评综合楼，一、二层建筑面积合计6900㎡。",
+    "siteConditions": "用地东、北侧临园区道路，西、南侧为园区待建用地，用地内地势平坦，有一栋既有建筑。",
+    "designRequirements": [
+      "考务流线清晰",
+      "考生与考务分流",
+      "标准化考场布局",
+      "新旧建筑连接"
+    ],
+    "corePoints": ["考务流线", "考生考务分流", "标准化考场", "新旧连接"],
+    "difficulty": 3
+  },
+  {
+    "id": "exam-2022-12",
+    "year": "2022.12",
+    "title": "数据应用科普中心",
+    "buildingType": "文体",
+    "siteSize": "",
+    "totalArea": 0,
+    "floors": "2层",
+    "description": "拟建一座数据应用科普中心，包含展陈、体验、公共服务、技术管理等功能。",
+    "siteConditions": "用地为矩形，地势平坦，需考虑参观流线和展陈空间。",
+    "designRequirements": [
+      "参观流线连贯",
+      "展陈空间灵活",
+      "公共与技术分区",
+      "互动体验空间"
+    ],
+    "corePoints": ["参观流线", "展陈空间", "公共技术分区", "互动体验"],
+    "difficulty": 3
+  },
+  {
+    "id": "exam-2023",
+    "year": "2023",
+    "title": "安全教育中心",
+    "buildingType": "服务",
+    "siteSize": "",
+    "totalArea": 0,
+    "floors": "2层",
+    "description": "拟建一座安全教育中心，包含体验展陈、培训、公共服务、管理等功能。",
+    "siteConditions": "用地为矩形，地势平坦，需考虑体验流线和公共空间。",
+    "designRequirements": [
+      "体验流线清晰",
+      "展陈空间布局",
+      "公共与管理分区",
+      "应急空间设计"
+    ],
+    "corePoints": ["体验流线", "展陈空间", "公共管理分区", "应急空间"],
+    "difficulty": 3
+  },
+  {
+    "id": "exam-2024",
+    "year": "2024",
+    "title": "社区综合服务中心",
+    "buildingType": "服务",
+    "siteSize": "",
+    "totalArea": 0,
+    "floors": "2层",
+    "description": "拟建一座社区综合服务中心，包含文化、体育、休闲、公共服务等复合功能。",
+    "siteConditions": "用地位于城市更新区域，需考虑社区公共性和动静分区。",
+    "designRequirements": [
+      "多功能复合",
+      "社区公共性",
+      "动静分区",
+      "居民流线"
+    ],
+    "corePoints": ["多功能复合", "社区公共性", "动静分区", "居民流线"],
+    "difficulty": 3
+  },
+  {
+    "id": "exam-2025",
+    "year": "2025",
+    "title": "中试验证中心",
+    "buildingType": "工业科研",
+    "siteSize": "",
+    "totalArea": 0,
+    "floors": "2层",
+    "description": "拟建一座中试验证中心，包含科研、中试生产、货物装卸、办公等功能。",
+    "siteConditions": "用地为矩形，需考虑科研与生产流线、货物装卸场地。",
+    "designRequirements": [
+      "科研与生产流线",
+      "货物装卸场地",
+      "洁净与普通分区",
+      "办公与生产联系"
+    ],
+    "corePoints": ["科研生产流线", "货物装卸", "洁净普通分区", "办公生产联系"],
+    "difficulty": 4
+  }
+]
