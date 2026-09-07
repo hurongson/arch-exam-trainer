@@ -10,6 +10,13 @@ export type BuildingType =
   | '居住'
   | '工业科研';
 
+/** 面积表项 */
+export interface AreaTableItem {
+  zone: string; // 功能分区
+  rooms: string; // 包含房间
+  area: string; // 面积
+}
+
 /** 真题题目 */
 export interface Exam {
   id: string;
@@ -22,6 +29,7 @@ export interface Exam {
   description: string; // 任务描述
   siteConditions: string; // 用地条件
   designRequirements: string[]; // 设计要求
+  areaTable?: AreaTableItem[]; // 面积表
   corePoints: string[]; // 核心考点
   difficulty: 1 | 2 | 3 | 4 | 5; // 难度 1-5
 }

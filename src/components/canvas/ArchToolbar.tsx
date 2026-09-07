@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import {
   Square,
   Minus,
@@ -19,8 +19,6 @@ import {
 } from 'lucide-react';
 
 interface ArchToolbarProps {
-  activeTool: string;
-  onToolSelect: (tool: string) => void;
   onCreateWall: (type: 'exterior' | 'interior' | 'partition') => void;
   onCreateDoor: (type: 'swing' | 'sliding' | 'double') => void;
   onCreateWindow: () => void;
@@ -97,9 +95,7 @@ const toolGroups = [
   },
 ];
 
-export function ArchToolbar({
-  activeTool,
-  onToolSelect,
+export const ArchToolbar = memo(function ArchToolbar({
   onCreateWall,
   onCreateDoor,
   onCreateWindow,
@@ -113,8 +109,6 @@ export function ArchToolbar({
   const [expandedGroup, setExpandedGroup] = useState<string | null>('wall');
 
   const handleItemClick = (group: typeof toolGroups[0], item: typeof toolGroups[0]['items'][0]) => {
-    onToolSelect(item.id);
-
     switch (item.action) {
       case 'wall':
         onCreateWall(item.value as 'exterior' | 'interior' | 'partition');
@@ -179,11 +173,7 @@ export function ArchToolbar({
                   <button
                     key={item.id}
                     onClick={() => handleItemClick(group, item)}
-                    className={`w-full rounded-md px-2 py-1 text-left text-[11px] transition-colors ${
-                      activeTool === item.id
-                        ? 'bg-primary-100 text-primary-700'
-                        : 'text-gray-600 hover:bg-gray-100'
-                    }`}
+                    className="w-full rounded-md px-2 py-1 text-left text-[11px] text-gray-600 transition-colors hover:bg-gray-100"
                   >
                     {item.label}
                   </button>
@@ -203,4 +193,4 @@ export function ArchToolbar({
       </div>
     </div>
   );
-}
+});

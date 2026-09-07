@@ -29,7 +29,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
   const containerRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<Editor | null>(null);
   const [store, setStore] = useState<any>(null);
-  const [activeTool, setActiveTool] = useState<string>('select');
 
   // 初始化 store
   useEffect(() => {
@@ -93,7 +92,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     });
 
     editor.setCurrentTool('select');
-    setActiveTool('select');
   }, []);
 
   // 创建门
@@ -119,7 +117,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     });
 
     editor.setCurrentTool('select');
-    setActiveTool('select');
   }, []);
 
   // 创建窗
@@ -144,7 +141,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     });
 
     editor.setCurrentTool('select');
-    setActiveTool('select');
   }, []);
 
   // 创建柱
@@ -170,7 +166,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     });
 
     editor.setCurrentTool('select');
-    setActiveTool('select');
   }, []);
 
   // 创建尺寸标注
@@ -196,7 +191,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     });
 
     editor.setCurrentTool('select');
-    setActiveTool('select');
   }, []);
 
   // 创建轴号
@@ -222,7 +216,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     });
 
     editor.setCurrentTool('select');
-    setActiveTool('select');
   }, []);
 
   // 创建标高
@@ -247,7 +240,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     });
 
     editor.setCurrentTool('select');
-    setActiveTool('select');
   }, []);
 
   // 创建楼梯
@@ -274,7 +266,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     });
 
     editor.setCurrentTool('select');
-    setActiveTool('select');
   }, []);
 
   // 插入图框
@@ -306,7 +297,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     // 缩放到图框
     editor.zoomToFit();
     editor.setCurrentTool('select');
-    setActiveTool('select');
   }, []);
 
   // 获取快照
@@ -423,8 +413,6 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
 
       {/* 建筑专业工具栏 */}
       <ArchToolbar
-        activeTool={activeTool}
-        onToolSelect={setActiveTool}
         onCreateWall={createWall}
         onCreateDoor={createDoor}
         onCreateWindow={createWindow}
