@@ -17,6 +17,14 @@ export interface AreaTableItem {
   area: string; // 面积
 }
 
+/** 真题图片 */
+export interface ExamImage {
+  type: 'site' | 'function' | 'area' | 'reference'; // 类型：总平/功能关系/面积表/参考图
+  title: string; // 图片标题
+  url: string; // 图片路径
+  description?: string; // 图片说明
+}
+
 /** 真题题目 */
 export interface Exam {
   id: string;
@@ -30,6 +38,7 @@ export interface Exam {
   siteConditions: string; // 用地条件
   designRequirements: string[]; // 设计要求
   areaTable?: AreaTableItem[]; // 面积表
+  images?: ExamImage[]; // 真题图片
   corePoints: string[]; // 核心考点
   difficulty: 1 | 2 | 3 | 4 | 5; // 难度 1-5
 }
@@ -72,6 +81,14 @@ export interface EvaluationResult {
   model: string; // 使用的模型
 }
 
+/** 案例图片 */
+export interface CaseImage {
+  type: 'site' | 'plan' | 'elevation' | 'section' | 'analysis' | 'axonometric'; // 类型
+  title: string; // 图片标题
+  url: string; // 图片路径
+  description?: string; // 图片说明
+}
+
 /** 建筑案例（用于每日推送） */
 export interface ArchCase {
   id: string;
@@ -81,8 +98,7 @@ export interface ArchCase {
   year: number; // 建成年份
   buildingType: BuildingType;
   area?: number; // 建筑面积
-  floorPlanUrl?: string; // 平面图 URL
-  elevationUrl?: string; // 立面图 URL
+  images?: CaseImage[]; // 案例图片
   description: string; // 项目描述
   designHighlights: string[]; // 设计亮点
   examRelevance: string[]; // 与一注考试的关联点

@@ -135,6 +135,66 @@ export default function QuizDetailPage() {
               </ul>
             </div>
 
+            {/* Area Table */}
+            {exam.areaTable && exam.areaTable.length > 0 && (
+              <div className="rounded-xl border border-gray-100 bg-white p-6">
+                <h2 className="mb-3 flex items-center gap-2 text-base font-semibold text-gray-900">
+                  <Layers className="h-4 w-4 text-primary-600" />
+                  面积表
+                </h2>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="pb-2 text-left font-semibold text-gray-900">功能分区</th>
+                        <th className="pb-2 text-left font-semibold text-gray-900">包含房间</th>
+                        <th className="pb-2 text-right font-semibold text-gray-900">面积</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {exam.areaTable.map((item, i) => (
+                        <tr key={i} className="border-b border-gray-100">
+                          <td className="py-2 font-medium text-gray-900">{item.zone}</td>
+                          <td className="py-2 text-gray-600">{item.rooms}</td>
+                          <td className="py-2 text-right font-medium text-primary-700">{item.area}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* Exam Images */}
+            {exam.images && exam.images.length > 0 && (
+              <div className="rounded-xl border border-gray-100 bg-white p-6">
+                <h2 className="mb-3 flex items-center gap-2 text-base font-semibold text-gray-900">
+                  <MapPin className="h-4 w-4 text-primary-600" />
+                  真题图纸
+                </h2>
+                <div className="grid grid-cols-1 gap-4">
+                  {exam.images.map((img, i) => (
+                    <div key={i} className="overflow-hidden rounded-lg border border-gray-200">
+                      <div className="bg-gray-50 p-2">
+                        <img
+                          src={img.url}
+                          alt={img.title}
+                          className="w-full rounded border border-gray-200 bg-white"
+                          style={{ maxHeight: '500px', objectFit: 'contain' }}
+                        />
+                      </div>
+                      <div className="border-t border-gray-100 bg-white px-4 py-2">
+                        <p className="text-sm font-medium text-gray-900">{img.title}</p>
+                        {img.description && (
+                          <p className="mt-1 text-xs text-gray-500">{img.description}</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Core Points */}
             <div className="rounded-xl border border-gray-100 bg-white p-6">
               <h2 className="mb-3 flex items-center gap-2 text-base font-semibold text-gray-900">
