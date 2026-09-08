@@ -348,7 +348,13 @@
       {"zone": "管理辅助", "rooms": "管理办公室、设备机房、储藏室", "area": "约400㎡"}
     ],
     "images": [
-      {"type": "reference", "title": "学生文体活动中心一层平面参考图", "url": "/images/exams/exam-2021-plan.jpg", "description": "参考答案一层平面图，展示功能分区和空间布局"}
+      {"type": "floor1", "title": "学生文体活动中心一层平面图", "url": "/images/exams/exam-2021-floor1.jpg", "description": "参考答案一层平面图，展示功能分区和空间布局"},
+      {"type": "floor2", "title": "学生文体活动中心二层平面图", "url": "/images/exams/exam-2021-floor2.jpg", "description": "参考答案二层平面图，展示大跨度空间和通高关系"}
+    ],
+    "layers": [
+      {"id": "layer-site", "name": "总平面图", "type": "site", "url": "/images/exams/exam-2021-floor1.jpg", "description": "总平面布局参考"},
+      {"id": "layer-floor1", "name": "一层平面", "type": "floor1", "url": "/images/exams/exam-2021-floor1.jpg", "description": "一层平面底图，可在此基础上绘图"},
+      {"id": "layer-floor2", "name": "二层平面", "type": "floor2", "url": "/images/exams/exam-2021-floor2.jpg", "description": "二层平面底图，可在此基础上绘图"}
     ],
     "corePoints": ["动静分区明确", "大跨度体育空间", "多功能厅灵活使用", "学生人流组织", "公共空间促进交流", "与校园环境融合"],
     "difficulty": 4
@@ -381,7 +387,12 @@
       {"zone": "设备辅助", "rooms": "设备机房、储藏室、楼梯间、电梯", "area": "约600㎡"}
     ],
     "images": [
-      {"type": "site", "title": "考试测评综合楼总平面图", "url": "/images/exams/exam-2022-site.jpg", "description": "真题总平面图，展示用地条件、既有办公楼位置、建筑控制线和内外分区"}
+      {"type": "site", "title": "考试测评综合楼总平面图", "url": "/images/exams/exam-2022-site.jpg", "description": "真题总平面图，展示用地条件、既有办公楼位置、建筑控制线和内外分区"},
+      {"type": "floor2", "title": "考试测评综合楼二层平面图", "url": "/images/exams/exam-2022-floor2.jpg", "description": "参考答案二层平面图，展示标准化考场布局和内外分区"}
+    ],
+    "layers": [
+      {"id": "layer-site", "name": "总平面图", "type": "site", "url": "/images/exams/exam-2022-site.jpg", "description": "真题总平面，含用地条件和建筑控制线"},
+      {"id": "layer-floor2", "name": "二层平面", "type": "floor2", "url": "/images/exams/exam-2022-floor2.jpg", "description": "二层平面底图，可在此基础上绘图"}
     ],
     "corePoints": ["内外分区严格", "考生与考务分流", "试卷流线保密", "标准化考场布局", "新旧建筑连接", "消防环路与闸道"],
     "difficulty": 4

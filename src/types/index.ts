@@ -19,10 +19,20 @@ export interface AreaTableItem {
 
 /** 真题图片 */
 export interface ExamImage {
-  type: 'site' | 'function' | 'area' | 'reference'; // 类型：总平/功能关系/面积表/参考图
+  type: 'site' | 'function' | 'area' | 'reference' | 'floor1' | 'floor2' | 'task'; // 类型
   title: string; // 图片标题
   url: string; // 图片路径
   description?: string; // 图片说明
+}
+
+/** 真题图层（用于画布底图） */
+export interface ExamLayer {
+  id: string; // 图层ID
+  name: string; // 图层名称：任务书、总平面图、一层平面、二层平面
+  type: 'task' | 'site' | 'floor1' | 'floor2';
+  url?: string; // 图片URL（如果是图片图层）
+  content?: string; // 文字内容（如果是任务书图层）
+  description?: string; // 图层说明
 }
 
 /** 真题题目 */
@@ -39,6 +49,7 @@ export interface Exam {
   designRequirements: string[]; // 设计要求
   areaTable?: AreaTableItem[]; // 面积表
   images?: ExamImage[]; // 真题图片
+  layers?: ExamLayer[]; // 真题图层（用于画布底图）
   corePoints: string[]; // 核心考点
   difficulty: 1 | 2 | 3 | 4 | 5; // 难度 1-5
 }
@@ -89,6 +100,15 @@ export interface CaseImage {
   description?: string; // 图片说明
 }
 
+/** 案例图纸详细分析 */
+export interface CaseDrawingAnalysis {
+  type: 'site' | 'plan' | 'elevation' | 'section' | 'axonometric'; // 图纸类型
+  title: string; // 分析标题
+  imageUrl?: string; // 相关图片URL
+  analysis: string[]; // 分析要点列表
+  keyPoints?: string[]; // 关键设计点
+}
+
 /** 建筑案例（用于每日推送） */
 export interface ArchCase {
   id: string;
@@ -99,6 +119,7 @@ export interface ArchCase {
   buildingType: BuildingType;
   area?: number; // 建筑面积
   images?: CaseImage[]; // 案例图片
+  drawingAnalysis?: CaseDrawingAnalysis[]; // 图纸详细分析
   description: string; // 项目描述
   designHighlights: string[]; // 设计亮点
   examRelevance: string[]; // 与一注考试的关联点

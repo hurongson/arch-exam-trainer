@@ -43,6 +43,7 @@ export default function TrainPage() {
   const [record, setRecord] = useState<TrainingRecord | null>(null);
   const [exam, setExam] = useState<Exam | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('canvas');
+  const [activeLayer, setActiveLayer] = useState<string>(''); // 当前选中的底图层
   const [elapsed, setElapsed] = useState(0);
   const [saving, setSaving] = useState(false);
   const [evaluating, setEvaluating] = useState(false);
@@ -352,12 +353,63 @@ export default function TrainPage() {
               </div>
 
               {/* Canvas - 专业建筑画布 */}
-              <div className="flex-1 bg-white">
-                <ArchCanvas
-                  ref={editorRef}
-                  initialData={record.schemeData}
-                  buildingType={exam.buildingType}
-                />
+              <div className="flex flex-1 flex-col bg-white">
+                {/* 图层切换栏 */}
+                {exam?.layers && exam.layers.length > 0 && (
+                  <div className="flex items-center gap-2 border-b border-gray-100 bg-gray-50 px-4 py-2">
+                    <span className="text-xs font-medium text-gray-500">底图图层：</span>
+                    <button
+                      onClick={() => setActiveLayer('')}
+                      className={`rounded px-2.5 py-1 text-xs font-medium transition-colors ${
+                        activeLayer === ''
+                          ? 'bg-primary-600 text-white'
+                          : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                      }`}
+                    >
+                      空白画布
+                    </button>
+                    {exam.layers.map((layer) => (
+                      <button
+                        key={layer.id}
+                        onClick={() => setActiveLayer(layer.id)}
+                        className={`rounded px-2.5 py-1 text-xs font-medium transition-colors ${
+                          activeLayer === layer.id
+                            ? 'bg-primary-600 text-white'
+                            : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                        }`}
+                      >
+                        {layer.name}
+                      </button>
+                    ))}
+                    {activeLayer && (
+                      <span className="ml-auto text-[11px] text-gray-400">
+                        提示：底图仅作参考，可在上方直接绘图
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                {/* 画布容器 */}
+                <div className="relative flex-1">
+                  {/* 底图背景 */}
+                  {activeLayer && exam?.layers?.find(l => l.id === activeLayer)?.url && (
+                    <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden opacity-30">
+                      <img
+                        src={exam.layers.find(l => l.id === activeLayer)?.url}
+                        alt={exam.layers.find(l => l.id === activeLayer)?.name}
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                  )}
+                  {/* tldraw 画布 */}
+                  <div className="relative z-10 h-full">
+                    <ArchCanvas
+                      ref={editorRef}
+                      initialData={record.schemeData}
+                      buildingType={exam.buildingType}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           ) : (

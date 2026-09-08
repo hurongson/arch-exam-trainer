@@ -169,6 +169,70 @@ export default function CasesPage() {
                   </div>
                 )}
 
+                {/* Detailed Drawing Analysis */}
+                {selectedCase.drawingAnalysis && selectedCase.drawingAnalysis.length > 0 && (
+                  <div className="mt-6">
+                    <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900">
+                      <Target className="h-4 w-4 text-primary-600" />
+                      图纸详细解读
+                    </h3>
+                    <div className="space-y-5">
+                      {selectedCase.drawingAnalysis.map((da, idx) => (
+                        <div key={idx} className="overflow-hidden rounded-lg border border-gray-200">
+                          <div className="border-b border-gray-100 bg-gray-50 px-4 py-2.5">
+                            <div className="flex items-center gap-2">
+                              <span className="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-semibold text-primary-700">
+                                {da.type === 'site' ? '总平' :
+                                 da.type === 'plan' ? '平面' :
+                                 da.type === 'elevation' ? '立面' :
+                                 da.type === 'section' ? '剖面' :
+                                 da.type === 'axonometric' ? '轴测' : '分析'}
+                              </span>
+                              <span className="text-sm font-semibold text-gray-900">{da.title}</span>
+                            </div>
+                          </div>
+                          {da.imageUrl && (
+                            <div className="bg-gray-50 p-3">
+                              <img
+                                src={da.imageUrl}
+                                alt={da.title}
+                                className="mx-auto max-h-80 rounded border border-gray-200 bg-white object-contain"
+                              />
+                            </div>
+                          )}
+                          <div className="p-4">
+                            <ul className="space-y-2">
+                              {da.analysis.map((point, i) => (
+                                <li key={i} className="flex gap-2 text-sm leading-relaxed text-gray-700">
+                                  <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 text-[11px] font-semibold text-primary-700">
+                                    {i + 1}
+                                  </span>
+                                  {point}
+                                </li>
+                              ))}
+                            </ul>
+                            {da.keyPoints && da.keyPoints.length > 0 && (
+                              <div className="mt-3 border-t border-gray-100 pt-3">
+                                <p className="mb-1.5 text-xs font-semibold text-gray-500">关键要点：</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {da.keyPoints.map((kp, i) => (
+                                    <span
+                                      key={i}
+                                      className="rounded bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-700"
+                                    >
+                                      {kp}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Design Highlights */}
                 <div className="mt-6">
                   <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900">
