@@ -1,0 +1,21 @@
+name: 每日建筑案例推送
+
+on:
+  schedule:
+    # 每天 UTC 23:30 = 北京时间第二天 07:30
+    - cron: '30 23 * * *'
+  # 支持手动触发
+  workflow_dispatch:
+
+jobs:
+  push-case:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 调用飞书推送 API
+        run: |
+          echo "开始推送每日建筑案例..."
+          response=$(curl -s -X POST "https://regal-licorice-fd2cbe.netlify.app/api/feishu-push" \
+            -H "Content-Type: application/json" \
+            -d '{}')
+          echo "推送结果: $response"
+          echo "$response" | grep -q '"success":true' && echo "推送成功" || echo "推送可能失败，请检查"

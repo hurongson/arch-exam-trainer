@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import Sidebar from '@/components/layout/Sidebar';
 import AppLayout from '@/components/layout/AppLayout';
+import { ImageViewer } from '@/components/ImageViewer';
 import examsData from '@/../data/exams.json';
 import type { Exam } from '@/types';
 import { createRecord } from '@/lib/storage';
@@ -171,24 +172,15 @@ export default function QuizDetailPage() {
                 <h2 className="mb-3 flex items-center gap-2 text-base font-semibold text-gray-900">
                   <MapPin className="h-4 w-4 text-primary-600" />
                   真题图纸
+                  <span className="text-xs font-normal text-gray-400">（点击图片可放大缩放查看）</span>
                 </h2>
                 <div className="grid grid-cols-1 gap-4">
                   {exam.images.map((img, i) => (
-                    <div key={i} className="overflow-hidden rounded-lg border border-gray-200">
-                      <div className="bg-gray-50 p-2">
-                        <img
-                          src={img.url}
-                          alt={img.title}
-                          className="w-full rounded border border-gray-200 bg-white"
-                          style={{ maxHeight: '500px', objectFit: 'contain' }}
-                        />
-                      </div>
-                      <div className="border-t border-gray-100 bg-white px-4 py-2">
-                        <p className="text-sm font-medium text-gray-900">{img.title}</p>
-                        {img.description && (
-                          <p className="mt-1 text-xs text-gray-500">{img.description}</p>
-                        )}
-                      </div>
+                    <div key={i}>
+                      <ImageViewer src={img.url} alt={img.title} title={img.title} />
+                      {img.description && (
+                        <p className="mt-1.5 px-1 text-xs text-gray-500">{img.description}</p>
+                      )}
                     </div>
                   ))}
                 </div>

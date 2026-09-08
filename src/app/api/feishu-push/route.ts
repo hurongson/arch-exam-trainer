@@ -49,13 +49,38 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 如果 AI 分析失败，使用预设内容
+    // 如果 AI 分析失败，使用预设内容（包含详细分析）
     if (!analysis) {
+      const highlightsText = selectedCase.designHighlights
+        .map((h, i) => `${i + 1}. ${h}`)
+        .join('\n');
+      const relevanceText = selectedCase.examRelevance
+        .map((r, i) => `${i + 1}. ${r}`)
+        .join('\n');
+
+      // 如果有图纸详细分析，也加入
+      let drawingAnalysisText = '';
+      if (selectedCase.drawingAnalysis && selectedCase.drawingAnalysis.length > 0) {
+        drawingAnalysisText = selectedCase.drawingAnalysis
+          .map((da) => {
+            const points = da.analysis.slice(0, 3).map((p, i) => `  ${i + 1}) ${p}`).join('\n');
+            return `【${da.title}】\n${points}`;
+          })
+          .join('\n\n');
+      }
+
       analysis = `【设计亮点】
-${selectedCase.designHighlights.map((h, i) => `${i + 1}. ${h}`).join('\n')}
+${highlightsText}
 
 【一注考点关联】
-${selectedCase.examRelevance.map((r, i) => `${i + 1}. ${r}`).join('\n')}`;
+${relevanceText}
+${drawingAnalysisText ? `\n【图纸深度解读】\n${drawingAnalysisText}` : ''}
+
+【学习建议】
+结合今日案例，思考以下问题：
+1. 该案例的空间组织方式能否应用到一注大设计中？
+2. 该案例的材料/结构/光影处理有哪些可借鉴之处？
+3. 如果是你，会如何将这些设计手法转化为考试中的得分点？`;
     }
 
     // 构建飞书消息卡片

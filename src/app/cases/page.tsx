@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import Sidebar from '@/components/layout/Sidebar';
 import AppLayout from '@/components/layout/AppLayout';
+import { ImageViewer } from '@/components/ImageViewer';
 import casesData from '@/../data/cases.json';
 import type { ArchCase } from '@/types';
 
@@ -135,34 +136,28 @@ export default function CasesPage() {
                 {/* Case Images */}
                 {selectedCase.images && selectedCase.images.length > 0 && (
                   <div className="mt-6">
-                    <h3 className="mb-3 text-sm font-semibold text-gray-900">图纸分析</h3>
+                    <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900">
+                      图纸分析
+                      <span className="text-xs font-normal text-gray-400">（点击图片可放大缩放查看）</span>
+                    </h3>
                     <div className="grid grid-cols-1 gap-4">
                       {selectedCase.images.map((img, i) => (
-                        <div key={i} className="overflow-hidden rounded-lg border border-gray-200">
-                          <div className="bg-gray-50 p-3">
-                            <img
-                              src={img.url}
-                              alt={img.title}
-                              className="w-full rounded border border-gray-200 bg-white"
-                              style={{ maxHeight: '450px', objectFit: 'contain' }}
-                            />
+                        <div key={i}>
+                          <div className="mb-1.5 flex items-center gap-2 px-1">
+                            <span className="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-semibold text-primary-700">
+                              {img.type === 'site' ? '总平' :
+                               img.type === 'plan' ? '平面' :
+                               img.type === 'elevation' ? '立面' :
+                               img.type === 'section' ? '剖面' :
+                               img.type === 'analysis' ? '分析' :
+                               img.type === 'axonometric' ? '轴测' : '图纸'}
+                            </span>
+                            <span className="text-sm font-medium text-gray-900">{img.title}</span>
                           </div>
-                          <div className="border-t border-gray-100 bg-white px-4 py-2.5">
-                            <div className="flex items-center gap-2">
-                              <span className="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-semibold text-primary-700">
-                                {img.type === 'site' ? '总平' :
-                                 img.type === 'plan' ? '平面' :
-                                 img.type === 'elevation' ? '立面' :
-                                 img.type === 'section' ? '剖面' :
-                                 img.type === 'analysis' ? '分析' :
-                                 img.type === 'axonometric' ? '轴测' : '图纸'}
-                              </span>
-                              <span className="text-sm font-medium text-gray-900">{img.title}</span>
-                            </div>
-                            {img.description && (
-                              <p className="mt-1 text-xs leading-relaxed text-gray-500">{img.description}</p>
-                            )}
-                          </div>
+                          <ImageViewer src={img.url} alt={img.title} />
+                          {img.description && (
+                            <p className="mt-1.5 px-1 text-xs leading-relaxed text-gray-500">{img.description}</p>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -193,11 +188,7 @@ export default function CasesPage() {
                           </div>
                           {da.imageUrl && (
                             <div className="bg-gray-50 p-3">
-                              <img
-                                src={da.imageUrl}
-                                alt={da.title}
-                                className="mx-auto max-h-80 rounded border border-gray-200 bg-white object-contain"
-                              />
+                              <ImageViewer src={da.imageUrl} alt={da.title} />
                             </div>
                           )}
                           <div className="p-4">
