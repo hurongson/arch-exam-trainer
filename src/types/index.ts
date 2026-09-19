@@ -118,6 +118,16 @@ export interface ArchCase {
   year: number; // 建成年份
   buildingType: BuildingType;
   area?: number; // 建筑面积
+  // === 参数化字段 ===
+  region?: '华北' | '华东' | '华南' | '华中' | '西南' | '西北' | '东北' | '海外'; // 地域
+  regionStyle?: string; // 地域风格描述
+  climateZone?: '严寒' | '寒冷' | '夏热冬冷' | '夏热冬暖' | '温和' | '海外'; // 气候分区
+  floorCount?: number; // 地上层数
+  structureType?: '框架' | '剪力墙' | '框架剪力墙' | '钢结构' | '砖混' | '混凝土' | '木结构' | '混合结构' | '其他'; // 结构形式
+  buildingHeight?: number; // 建筑高度（米）
+  plotRatio?: number; // 容积率
+  siteArea?: number; // 用地面积（㎡）
+  // === 原有字段 ===
   images?: CaseImage[]; // 案例图片
   drawingAnalysis?: CaseDrawingAnalysis[]; // 图纸详细分析
   description: string; // 项目描述
