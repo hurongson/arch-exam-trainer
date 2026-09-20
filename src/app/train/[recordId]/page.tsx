@@ -44,6 +44,7 @@ export default function TrainPage() {
   const [exam, setExam] = useState<Exam | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('canvas');
   const [activeLayer, setActiveLayer] = useState<string>(''); // 当前选中的底图层
+  const [layerOpacity, setLayerOpacity] = useState(30); // 底图透明度（百分比）
   const [elapsed, setElapsed] = useState(0);
   const [saving, setSaving] = useState(false);
   const [evaluating, setEvaluating] = useState(false);
@@ -382,9 +383,18 @@ export default function TrainPage() {
                       </button>
                     ))}
                     {activeLayer && (
-                      <span className="ml-auto text-[11px] text-gray-400">
-                        提示：底图仅作参考，可在上方直接绘图
-                      </span>
+                      <div className="ml-auto flex items-center gap-2">
+                        <span className="text-[11px] text-gray-400">底图透明度</span>
+                        <input
+                          type="range"
+                          min="10"
+                          max="100"
+                          value={layerOpacity}
+                          onChange={(e) => setLayerOpacity(Number(e.target.value))}
+                          className="h-1 w-24 cursor-pointer accent-primary-600"
+                        />
+                        <span className="w-8 text-[11px] font-medium text-gray-500">{layerOpacity}%</span>
+                      </div>
                     )}
                   </div>
                 )}
@@ -393,11 +403,14 @@ export default function TrainPage() {
                 <div className="relative flex-1">
                   {/* 底图背景 */}
                   {activeLayer && exam?.layers?.find(l => l.id === activeLayer)?.url && (
-                    <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden opacity-30">
+                    <div
+                      className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
+                      style={{ opacity: layerOpacity / 100 }}
+                    >
                       <img
                         src={exam.layers.find(l => l.id === activeLayer)?.url}
                         alt={exam.layers.find(l => l.id === activeLayer)?.name}
-                        className="max-h-full max-w-full object-contain"
+                        className="h-full w-full object-contain"
                       />
                     </div>
                   )}
