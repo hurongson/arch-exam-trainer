@@ -76,15 +76,15 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
 
     const thickness = WALL_THICKNESS[wallType];
     const origin = editor.getViewportScreenCenter();
-    const pagePoint = editor.pageToScreen({ x: origin.x - 100, y: origin.y });
+    const pagePoint = editor.screenToPage(origin);
 
     editor.createShape({
       type: ArchShapeTypes.WALL as any,
-      x: pagePoint.x,
-      y: pagePoint.y,
+      x: pagePoint.x - 100,
+      y: pagePoint.y - thickness / 2,
       props: {
-        start: { x: 0, y: 0 },
-        end: { x: 200, y: 0 },
+        w: 200,
+        h: thickness,
         thickness,
         wallType,
         color: '#1a1a1a',

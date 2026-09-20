@@ -369,7 +369,8 @@ export default function TrainPage() {
                     >
                       空白画布
                     </button>
-                    {exam.layers.map((layer) => (
+                    {/* 只显示总平、首层、二层三个作答纸图层，过滤掉任务书 */}
+                    {exam.layers.filter(l => l.type !== 'task').map((layer) => (
                       <button
                         key={layer.id}
                         onClick={() => setActiveLayer(layer.id)}
