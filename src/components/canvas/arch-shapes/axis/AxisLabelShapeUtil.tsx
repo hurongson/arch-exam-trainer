@@ -1,20 +1,7 @@
-import { BaseBoxShapeUtil, TLBaseShape, T, HTMLContainer } from 'tldraw';
+import { ShapeUtil, T, Rectangle2d, Geometry2d } from 'tldraw';
 
-/** 轴号形状 */
-export type AxisLabelShape = TLBaseShape<
-  'arch-axis-label',
-  {
-    w: number;
-    h: number;
-    label: string; // 轴号文字（A/B/C... 或 1/2/3...）
-    hasLeader: boolean; // 是否有引线
-    leaderDirection: 'top' | 'bottom' | 'left' | 'right';
-    color: string;
-  }
->;
-
-/** 轴号 ShapeUtil - 圆圈内文字+引线 */
-export class AxisLabelShapeUtil extends BaseBoxShapeUtil<any> {
+/** 轴号形状 - 简化稳定版 */
+export class AxisLabelShapeUtil extends ShapeUtil<any> {
   static type = 'arch-axis-label' as const;
 
   static props = {
@@ -26,90 +13,51 @@ export class AxisLabelShapeUtil extends BaseBoxShapeUtil<any> {
     color: T.string,
   };
 
-  getDefaultProps(): AxisLabelShape['props'] {
-    return {
-      w: 28,
-      h: 28,
-      label: 'A',
-      hasLeader: true,
-      leaderDirection: 'bottom',
-      color: '#1a1a1a',
-    };
+  getDefaultProps() {
+    return { w: 28, h: 28, label: 'A', hasLeader: true, leaderDirection: 'bottom', color: '#1a1a1a' };
   }
 
-  component(shape: AxisLabelShape) {
+  getGeometry(shape: any): Geometry2d {
+    const extra = shape.props.hasLeader ? 20 : 0;
+    return new Rectangle2d({ x: 0, y: 0, width: shape.props.w, height: shape.props.h + extra, isFilled: false });
+  }
+
+  component(shape: any) {
     const { w, h, label, hasLeader, leaderDirection, color } = shape.props;
-    const radius = Math.min(w, h) / 2;
-    const leaderLength = 40;
-
+    const cx = w / 2;
+    const cy = h / 2;
     return (
-      <HTMLContainer
-        style={{
-          width: w + (hasLeader ? leaderLength : 0),
-          height: h + (hasLeader ? leaderLength : 0),
-          position: 'relative',
-          overflow: 'visible',
-        }}
-      >
-        <svg
-          width={w + (hasLeader ? leaderLength : 0) + 10}
-          height={h + (hasLeader ? leaderLength : 0) + 10}
-          style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}
-        >
-          {/* 引线 */}
-          {hasLeader && (
-            <>
-              {leaderDirection === 'bottom' && (
-                <line x1={w / 2 + 5} y1={h + 5} x2={w / 2 + 5} y2={h + leaderLength + 5} stroke={color} strokeWidth={1} />
-              )}
-              {leaderDirection === 'top' && (
-                <line x1={w / 2 + 5} y1={5} x2={w / 2 + 5} y2={-leaderLength + 5} stroke={color} strokeWidth={1} />
-              )}
-              {leaderDirection === 'left' && (
-                <line x1={5} y1={h / 2 + 5} x2={-leaderLength + 5} y2={h / 2 + 5} stroke={color} strokeWidth={1} />
-              )}
-              {leaderDirection === 'right' && (
-                <line x1={w + 5} y1={h / 2 + 5} x2={w + leaderLength + 5} y2={h / 2 + 5} stroke={color} strokeWidth={1} />
-              )}
-            </>
-          )}
-
-          {/* 圆圈 */}
-          <circle
-            cx={w / 2 + 5}
-            cy={h / 2 + 5}
-            r={radius - 1}
-            fill="#ffffff"
-            stroke={color}
-            strokeWidth={1.2}
-          />
-
-          {/* 文字 */}
-          <text
-            x={w / 2 + 5}
-            y={h / 2 + 5}
-            textAnchor="middle"
-            dominantBaseline="central"
-            fontSize={radius * 0.9}
-            fill={color}
-            fontFamily="Arial, sans-serif"
-            fontWeight="500"
-          >
-            {label}
-          </text>
-        </svg>
-      </HTMLContainer>
+      <svg width={w} height={h + (hasLeader ? 20 : 0)} style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}>
+        {/* 轴号圆圈 */}
+        <circle cx={cx} cy={cy} r={w / 2 - 1} fill="#ffffff" stroke={color} strokeWidth={1.5} />
+        {/* 轴号文字 */}
+        <text x={cx} y={cy + 4} textAnchor="middle" fontSize={12} fontWeight="bold" fill={color} fontFamily="sans-serif">
+          {label}
+        </text>
+        {/* 引出线 */}
+        {hasLeader && leaderDirection === 'bottom' && (
+          <line x1={cx} y1={h} x2={cx} y2={h + 20} stroke={color} strokeWidth={1} />
+        )}
+        {hasLeader && leaderDirection === 'top' && (
+          <line x1={cx} y1={0} x2={cx} y2={-20} stroke={color} strokeWidth={1} />
+        )}
+        {hasLeader && leaderDirection === 'left' && (
+          <line x1={0} y1={cy} x2={-20} y2={cy} stroke={color} strokeWidth={1} />
+        )}
+        {hasLeader && leaderDirection === 'right' && (
+          <line x1={w} y1={cy} x2={w + 20} y2={cy} stroke={color} strokeWidth={1} />
+        )}
+      </svg>
     );
   }
 
-  getIndicatorPath(shape: AxisLabelShape) {
+  getIndicatorPath(shape: any) {
     const { w, h } = shape.props;
     const path = new Path2D();
-    path.arc(w / 2, h / 2, Math.min(w, h) / 2, 0, Math.PI * 2);
+    path.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2);
     return path;
   }
 
-  canResize() {
-    return false;
-  }
+  canResize() { return true; }
+  isAspectRatioLocked() { return true; }
 }

@@ -54,5 +54,5 @@ export {
 };
 
 export { WALL_THICKNESS, type WallType, type WallShape } from './wall/WallShapeUtil';
-export { COLUMN_SIZES, type ColumnType, type ColumnShape } from './column/ColumnShapeUtil';
-export { SHEET_DIMENSIONS, type SheetSize, type TitleBlockShape } from './titleblock/TitleBlockShapeUtil';
+export { COLUMN_SIZES, type ColumnType } from './column/ColumnShapeUtil';
+export { SHEET_DIMENSIONS } from './titleblock/TitleBlockShapeUtil';

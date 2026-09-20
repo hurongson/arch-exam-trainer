@@ -1,36 +1,15 @@
-import { BaseBoxShapeUtil, TLBaseShape, T, HTMLContainer } from 'tldraw';
+import { ShapeUtil, T, Rectangle2d, Geometry2d } from 'tldraw';
 
-/** 图幅类型 */
-export type SheetSize = 'A1' | 'A2' | 'A3' | 'A4';
-
-/** 图幅尺寸（mm，按1:100比例，像素=mm/10） */
-export const SHEET_DIMENSIONS: Record<SheetSize, { w: number; h: number }> = {
-  A1: { w: 841, h: 594 }, // 841x594mm -> 84x59px (1:10)
+/** 图幅尺寸 */
+export const SHEET_DIMENSIONS = {
+  A1: { w: 841, h: 594 },
   A2: { w: 594, h: 420 },
   A3: { w: 420, h: 297 },
   A4: { w: 297, h: 210 },
 };
 
-/** 图框形状 */
-export type TitleBlockShape = TLBaseShape<
-  'arch-titleblock',
-  {
-    w: number;
-    h: number;
-    sheetSize: SheetSize;
-    projectName: string;
-    drawingName: string;
-    drawingNumber: string;
-    scale: string;
-    designer: string;
-    date: string;
-    color: string;
-    showTitleBlock: boolean;
-  }
->;
-
-/** 图框 ShapeUtil */
-export class TitleBlockShapeUtil extends BaseBoxShapeUtil<any> {
+/** 图框形状 - 简化稳定版 */
+export class TitleBlockShapeUtil extends ShapeUtil<any> {
   static type = 'arch-titleblock' as const;
 
   static props = {
@@ -47,11 +26,10 @@ export class TitleBlockShapeUtil extends BaseBoxShapeUtil<any> {
     showTitleBlock: T.boolean,
   };
 
-  getDefaultProps(): TitleBlockShape['props'] {
-    const dims = SHEET_DIMENSIONS.A2;
+  getDefaultProps() {
     return {
-      w: dims.w,
-      h: dims.h,
+      w: 594,
+      h: 420,
       sheetSize: 'A2',
       projectName: '一级注册建筑师考试',
       drawingName: '建筑方案设计',
@@ -64,113 +42,63 @@ export class TitleBlockShapeUtil extends BaseBoxShapeUtil<any> {
     };
   }
 
-  component(shape: TitleBlockShape) {
+  getGeometry(shape: any): Geometry2d {
+    return new Rectangle2d({ x: 0, y: 0, width: shape.props.w, height: shape.props.h, isFilled: false });
+  }
+
+  component(shape: any) {
     const { w, h, projectName, drawingName, drawingNumber, scale, designer, date, color, showTitleBlock } = shape.props;
-    const margin = 10; // 图框边距
-    const titleBlockWidth = 120;
-    const titleBlockHeight = 40;
+    const margin = 10;
+    const titleBlockW = 180;
+    const titleBlockH = 50;
 
     return (
-      <HTMLContainer
-        style={{ width: w, height: h, position: 'relative', overflow: 'visible' }}
-      >
-        <svg
-          width={w}
-          height={h}
-          style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}
-        >
-          {/* 外框（纸边界） */}
-          <rect x={0} y={0} width={w} height={h} fill="#ffffff" stroke={color} strokeWidth={0.5} strokeDasharray="2,2" />
+      <svg width={w} height={h} style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}>
+        {/* 外框 */}
+        <rect x={0} y={0} width={w} height={h} fill="#ffffff" fillOpacity={0.3} stroke={color} strokeWidth={1.5} />
+        {/* 内框 */}
+        <rect x={margin} y={margin} width={w - margin * 2} height={h - margin * 2} fill="none" stroke={color} strokeWidth={0.5} />
 
-          {/* 内框（图框） */}
-          <rect x={margin} y={margin} width={w - margin * 2} height={h - margin * 2} fill="none" stroke={color} strokeWidth={1.2} />
-
-          {/* 标题栏 */}
-          {showTitleBlock && (
-            <g>
-              {/* 标题栏外框 */}
-              <rect
-                x={w - margin - titleBlockWidth}
-                y={h - margin - titleBlockHeight}
-                width={titleBlockWidth}
-                height={titleBlockHeight}
-                fill="none"
-                stroke={color}
-                strokeWidth={1}
-              />
-
-              {/* 标题栏分隔线 */}
-              <line
-                x1={w - margin - titleBlockWidth}
-                y1={h - margin - titleBlockHeight + 13}
-                x2={w - margin}
-                y2={h - margin - titleBlockHeight + 13}
-                stroke={color}
-                strokeWidth={0.5}
-              />
-              <line
-                x1={w - margin - titleBlockWidth}
-                y1={h - margin - titleBlockHeight + 26}
-                x2={w - margin}
-                y2={h - margin - titleBlockHeight + 26}
-                stroke={color}
-                strokeWidth={0.5}
-              />
-              <line
-                x1={w - margin - titleBlockWidth + 60}
-                y1={h - margin - titleBlockHeight + 13}
-                x2={w - margin - titleBlockWidth + 60}
-                y2={h - margin}
-                stroke={color}
-                strokeWidth={0.5}
-              />
-
-              {/* 标题栏文字 */}
-              <text x={w - margin - titleBlockWidth + 5} y={h - margin - titleBlockHeight + 9} fontSize={7} fill={color} fontFamily="Arial">
-                {projectName}
-              </text>
-              <text x={w - margin - titleBlockWidth + 5} y={h - margin - titleBlockHeight + 22} fontSize={8} fill={color} fontFamily="Arial" fontWeight="bold">
-                {drawingName}
-              </text>
-              <text x={w - margin - titleBlockWidth + 5} y={h - margin - titleBlockHeight + 35} fontSize={6} fill={color} fontFamily="Arial">
-                设计：{designer || '___'}
-              </text>
-              <text x={w - margin - titleBlockWidth + 65} y={h - margin - titleBlockHeight + 22} fontSize={6} fill={color} fontFamily="Arial">
-                图号：{drawingNumber}
-              </text>
-              <text x={w - margin - titleBlockWidth + 65} y={h - margin - titleBlockHeight + 35} fontSize={6} fill={color} fontFamily="Arial">
-                比例：{scale}
-              </text>
-              <text x={w - margin - 25} y={h - margin - 3} fontSize={5} fill={color} fontFamily="Arial" textAnchor="end">
-                {date}
-              </text>
-            </g>
-          )}
-
-          {/* 会签栏（左侧） */}
-          <g transform={`translate(${margin + 2}, ${h / 2 - 30}) rotate(-90)`}>
-            <rect x={0} y={0} width={60} height={15} fill="none" stroke={color} strokeWidth={0.5} />
-            <text x={30} y={10} fontSize={6} fill={color} fontFamily="Arial" textAnchor="middle">
-              会签栏
+        {showTitleBlock && (
+          <>
+            {/* 标题栏外框 */}
+            <rect x={w - margin - titleBlockW} y={h - margin - titleBlockH} width={titleBlockW} height={titleBlockH} fill="none" stroke={color} strokeWidth={1} />
+            {/* 标题栏分隔线 */}
+            <line x1={w - margin - titleBlockW} y1={h - margin - titleBlockH + 25} x2={w - margin} y2={h - margin - titleBlockH + 25} stroke={color} strokeWidth={0.5} />
+            <line x1={w - margin - titleBlockW / 2} y1={h - margin - titleBlockH} x2={w - margin - titleBlockW / 2} y2={h - margin - titleBlockH + 25} stroke={color} strokeWidth={0.5} />
+            {/* 工程名称 */}
+            <text x={w - margin - titleBlockW + 5} y={h - margin - titleBlockH + 16} fontSize={10} fontWeight="bold" fill={color} fontFamily="sans-serif">
+              {projectName}
             </text>
-          </g>
-        </svg>
-      </HTMLContainer>
+            {/* 图名 */}
+            <text x={w - margin - titleBlockW + 5} y={h - margin - titleBlockH + 40} fontSize={12} fontWeight="bold" fill={color} fontFamily="sans-serif">
+              {drawingName}
+            </text>
+            {/* 图号 */}
+            <text x={w - margin - titleBlockW / 2 + 5} y={h - margin - titleBlockH + 16} fontSize={9} fill={color} fontFamily="sans-serif">
+              图号：{drawingNumber}
+            </text>
+            {/* 比例 */}
+            <text x={w - margin - titleBlockW / 2 + 5} y={h - margin - titleBlockH + 40} fontSize={9} fill={color} fontFamily="sans-serif">
+              比例：{scale}
+            </text>
+            {/* 设计/日期 */}
+            <text x={w - margin - 80} y={h - margin - 5} fontSize={8} fill={color} fontFamily="sans-serif" textAnchor="end">
+              {designer} {date}
+            </text>
+          </>
+        )}
+      </svg>
     );
   }
 
-  getIndicatorPath(shape: TitleBlockShape) {
+  getIndicatorPath(shape: any) {
     const { w, h } = shape.props;
     const path = new Path2D();
     path.rect(0, 0, w, h);
     return path;
   }
 
-  canResize() {
-    return false;
-  }
-
-  isAspectRatioLocked() {
-    return true;
-  }
+  canResize() { return true; }
+  isAspectRatioLocked() { return false; }
 }

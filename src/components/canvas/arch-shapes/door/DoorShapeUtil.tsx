@@ -1,23 +1,10 @@
-import { BaseBoxShapeUtil, TLBaseShape, T, HTMLContainer } from 'tldraw';
+import { ShapeUtil, T, Rectangle2d, Geometry2d } from 'tldraw';
 
 /** 门类型 */
 export type DoorType = 'swing' | 'sliding' | 'double';
 
-/** 门形状 */
-export type DoorShape = TLBaseShape<
-  'arch-door',
-  {
-    w: number;
-    h: number;
-    doorType: DoorType;
-    swingDirection: 'left' | 'right'; // 平开门开启方向
-    color: string;
-    wallThickness: number; // 所在墙厚
-  }
->;
-
-/** 门 ShapeUtil */
-export class DoorShapeUtil extends BaseBoxShapeUtil<any> {
+/** 门形状 - 简化稳定版 */
+export class DoorShapeUtil extends ShapeUtil<any> {
   static type = 'arch-door' as const;
 
   static props = {
@@ -29,10 +16,10 @@ export class DoorShapeUtil extends BaseBoxShapeUtil<any> {
     wallThickness: T.number,
   };
 
-  getDefaultProps(): DoorShape['props'] {
+  getDefaultProps() {
     return {
-      w: 90, // 900mm 门宽
-      h: 12, // 墙厚方向
+      w: 90,
+      h: 12,
       doorType: 'swing',
       swingDirection: 'right',
       color: '#1a1a1a',
@@ -40,108 +27,68 @@ export class DoorShapeUtil extends BaseBoxShapeUtil<any> {
     };
   }
 
-  component(shape: DoorShape) {
-    const { w, h, doorType, swingDirection, color, wallThickness } = shape.props;
-    const halfWall = wallThickness / 2;
+  getGeometry(shape: any): Geometry2d {
+    const wallT = shape.props.wallThickness || 24;
+    return new Rectangle2d({
+      x: 0,
+      y: 0,
+      width: shape.props.w + wallT,
+      height: shape.props.w + wallT,
+      isFilled: false,
+    });
+  }
+
+  component(shape: any) {
+    const { w, doorType, color } = shape.props;
+    const wallT = shape.props.wallThickness || 24;
+    const cx = wallT / 2;
+    const cy = wallT / 2;
 
     return (
-      <HTMLContainer
-        style={{
-          width: w,
-          height: wallThickness,
-          position: 'relative',
-          overflow: 'visible',
-        }}
+      <svg
+        width={w + wallT * 2}
+        height={w + wallT}
+        style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}
       >
-        <svg
-          width={w + 20}
-          height={wallThickness + w + 20}
-          style={{
-            position: 'absolute',
-            top: -w / 2 - 10,
-            left: -10,
-            pointerEvents: 'none',
-            overflow: 'visible',
-          }}
-        >
-          {doorType === 'swing' && (
-            <g>
-              {/* 门板 */}
-              {swingDirection === 'right' ? (
-                <>
-                  <line x1={10} y1={10 + w / 2} x2={10} y2={10 + w / 2 - halfWall} stroke={color} strokeWidth={2} />
-                  {/* 90度弧线 */}
-                  <path
-                    d={`M 10 ${10 + w / 2 - halfWall} A ${w} ${w} 0 0 1 ${10 + w} ${10 + w / 2 - halfWall}`}
-                    fill="none"
-                    stroke={color}
-                    strokeWidth={1}
-                    strokeDasharray="4,2"
-                  />
-                  {/* 门板线 */}
-                  <line x1={10} y1={10 + w / 2 - halfWall} x2={10 + w} y2={10 + w / 2 - halfWall} stroke={color} strokeWidth={2} />
-                </>
-              ) : (
-                <>
-                  <line x1={10 + w} y1={10 + w / 2} x2={10 + w} y2={10 + w / 2 - halfWall} stroke={color} strokeWidth={2} />
-                  <path
-                    d={`M ${10 + w} ${10 + w / 2 - halfWall} A ${w} ${w} 0 0 0 ${10} ${10 + w / 2 - halfWall}`}
-                    fill="none"
-                    stroke={color}
-                    strokeWidth={1}
-                    strokeDasharray="4,2"
-                  />
-                  <line x1={10 + w} y1={10 + w / 2 - halfWall} x2={10} y2={10 + w / 2 - halfWall} stroke={color} strokeWidth={2} />
-                </>
-              )}
-            </g>
-          )}
+        {/* 墙线 */}
+        <line x1={0} y1={cy + 0.5} x2={cx} y2={cy + 0.5} stroke={color} strokeWidth={1.5} />
+        <line x1={cx + w} y1={cy + 0.5} x2={w + wallT * 2} y2={cy + 0.5} stroke={color} strokeWidth={1.5} />
+        <line x1={0} y1={cy + wallT - 0.5} x2={cx} y2={cy + wallT - 0.5} stroke={color} strokeWidth={1.5} />
+        <line x1={cx + w} y1={cy + wallT - 0.5} x2={w + wallT * 2} y2={cy + wallT - 0.5} stroke={color} strokeWidth={1.5} />
 
-          {doorType === 'sliding' && (
-            <g>
-              {/* 推拉门：两条错开的线 */}
-              <line x1={10} y1={10 + w / 2 - halfWall / 2} x2={10 + w / 2 + 10} y2={10 + w / 2 - halfWall / 2} stroke={color} strokeWidth={2} />
-              <line x1={10 + w / 2} y1={10 + w / 2 + halfWall / 2} x2={10 + w + 10} y2={10 + w / 2 + halfWall / 2} stroke={color} strokeWidth={2} />
-              {/* 轨道 */}
-              <line x1={10} y1={10 + w / 2} x2={10 + w + 10} y2={10 + w / 2} stroke={color} strokeWidth={0.5} />
-            </g>
-          )}
-
-          {doorType === 'double' && (
-            <g>
-              {/* 双开门 */}
-              <line x1={10 + w / 2} y1={10 + w / 2} x2={10 + w / 2} y2={10 + w / 2 - halfWall} stroke={color} strokeWidth={2} />
-              <path
-                d={`M ${10 + w / 2} ${10 + w / 2 - halfWall} A ${w / 2} ${w / 2} 0 0 1 ${10} ${10 + w / 2 - halfWall}`}
-                fill="none"
-                stroke={color}
-                strokeWidth={1}
-                strokeDasharray="4,2"
-              />
-              <path
-                d={`M ${10 + w / 2} ${10 + w / 2 - halfWall} A ${w / 2} ${w / 2} 0 0 0 ${10 + w} ${10 + w / 2 - halfWall}`}
-                fill="none"
-                stroke={color}
-                strokeWidth={1}
-                strokeDasharray="4,2"
-              />
-              <line x1={10 + w / 2} y1={10 + w / 2 - halfWall} x2={10} y2={10 + w / 2 - halfWall} stroke={color} strokeWidth={2} />
-              <line x1={10 + w / 2} y1={10 + w / 2 - halfWall} x2={10 + w} y2={10 + w / 2 - halfWall} stroke={color} strokeWidth={2} />
-            </g>
-          )}
-        </svg>
-      </HTMLContainer>
+        {doorType === 'swing' && (
+          <>
+            <line x1={cx} y1={cy + wallT / 2} x2={cx + w} y2={cy + wallT / 2} stroke={color} strokeWidth={2} />
+            <path d={`M ${cx + w} ${cy + wallT / 2} A ${w} ${w} 0 0 0 ${cx} ${cy + wallT / 2 - w}`} fill="none" stroke={color} strokeWidth={1} strokeDasharray="4,2" />
+            <circle cx={cx} cy={cy + wallT / 2} r={2} fill={color} />
+          </>
+        )}
+        {doorType === 'sliding' && (
+          <>
+            <line x1={cx} y1={cy + wallT / 2} x2={cx + w / 2} y2={cy + wallT / 2} stroke={color} strokeWidth={2} />
+            <line x1={cx + w / 2} y1={cy + wallT / 2 - 3} x2={cx + w} y2={cy + wallT / 2 - 3} stroke={color} strokeWidth={2} />
+          </>
+        )}
+        {doorType === 'double' && (
+          <>
+            <line x1={cx} y1={cy + wallT / 2} x2={cx + w / 2} y2={cy + wallT / 2} stroke={color} strokeWidth={2} />
+            <line x1={cx + w / 2} y1={cy + wallT / 2} x2={cx + w} y2={cy + wallT / 2} stroke={color} strokeWidth={2} />
+            <path d={`M ${cx + w / 2} ${cy + wallT / 2} A ${w / 2} ${w / 2} 0 0 0 ${cx} ${cy + wallT / 2 - w / 2}`} fill="none" stroke={color} strokeWidth={1} strokeDasharray="4,2" />
+            <path d={`M ${cx + w / 2} ${cy + wallT / 2} A ${w / 2} ${w / 2} 0 0 1 ${cx + w} ${cy + wallT / 2 - w / 2}`} fill="none" stroke={color} strokeWidth={1} strokeDasharray="4,2" />
+          </>
+        )}
+      </svg>
     );
   }
 
-  getIndicatorPath(shape: DoorShape) {
-    const { w, wallThickness } = shape.props;
+  getIndicatorPath(shape: any) {
+    const { w } = shape.props;
+    const wallT = shape.props.wallThickness || 24;
     const path = new Path2D();
-    path.rect(0, -w / 2, w, wallThickness + w);
+    path.rect(0, 0, w + wallT * 2, w + wallT);
     return path;
   }
 
-  canResize() {
-    return true;
-  }
+  canResize() { return true; }
+  isAspectRatioLocked() { return false; }
 }

@@ -179,12 +179,11 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
     editor.createShape({
       type: ArchShapeTypes.DIMENSION as any,
       x: pagePoint.x - 100,
-      y: pagePoint.y - 30,
+      y: pagePoint.y - 20,
       props: {
-        start: { x: 0, y: 30 },
-        end: { x: 200, y: 30 },
-        offset: 30,
-        text: '',
+        w: 200,
+        h: 40,
+        text: '3600',
         color: '#1a1a1a',
         fontSize: 12,
       },
