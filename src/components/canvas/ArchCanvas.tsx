@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react';
+import { useRef, useState, useCallback, useEffect, useMemo, forwardRef, useImperativeHandle } from 'react';
 import { Tldraw, createTLStore, defaultShapeUtils, type Editor, type TLRecord } from 'tldraw';
 import 'tldraw/tldraw.css';
 import { archShapeUtils, ArchShapeTypes, WALL_THICKNESS, COLUMN_SIZES, SHEET_DIMENSIONS } from './arch-shapes';
@@ -28,10 +28,9 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
   function ArchCanvas({ initialData, buildingType, onSave }, ref) {
   const containerRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<Editor | null>(null);
-  const [store, setStore] = useState<any>(null);
 
-  // 初始化 store
-  useEffect(() => {
+  // 初始化 store - 使用useMemo确保Tldraw渲染前store就存在
+  const store = useMemo(() => {
     const newStore = createTLStore({
       shapeUtils: [...defaultShapeUtils, ...archShapeUtils] as any,
     });
@@ -51,7 +50,7 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
       }
     }
 
-    setStore(newStore);
+    return newStore;
   }, [initialData]);
 
   // 编辑器挂载回调
@@ -397,17 +396,10 @@ export const ArchCanvas = forwardRef<ArchCanvasHandle, ArchCanvasProps>(
   }
 
   return (
-    <div ref={containerRef} className="relative h-full w-full">
+    <div ref={containerRef} className="relative h-full w-full overflow-hidden">
       <Tldraw
         store={store}
         onMount={handleMount}
-        components={{
-          // 可以自定义UI组件
-        }}
-        overrides={{
-          // 可以覆盖默认行为
-        }}
-        initialState="select"
       />
 
       {/* 建筑专业工具栏 */}
